@@ -5,7 +5,8 @@
     </head>
     <body>
         <div class="container">
-        <h3>{{ store.getName }}:</h3>
+        <h3>{{ store.getName }}</h3>
+        <h5>Location: {{ store.getAddress }}</h5>
 
         {% if brands is not empty %}
             <h5>Here are the brands available at this store.</h5>

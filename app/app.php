@@ -95,10 +95,29 @@
     return $app['twig']->render('brands.twig', array('brands' => Brand::getAll()));
   });
 
-  //Two edit routes per class: one to the page, one from the page
+  /** Three edit routes for the Store class: one to the page
+                                             one from the page updating name
+                                             one from the page updating address
+  * (Brands didn't require full CRUD functionality, so they can only be deleted.)
+  */
+  $app->get("/stores/{id}/edit", function($id) use ($app) {
+    $current_store = Store::find($id);
+    return $app['twig']->render('store_edit.twig', array('store' => $current_store));
+  });
 
+  $app->patch("/stores/{id}/name", function($id) use ($app) {
+    $current_store = Store::find($id);
+    $new_name = $_POST['new_name'];
+    $current_store->updateStoreName($new_name);
+    return $app['twig']->render('store.twig', array('store' => $current_store, 'brands' => $current_store->getBrands(), 'all_brands' => Brand::getAll()));
+  });
 
-  //Two update routes for store class: name & address
+  $app->patch("/stores/{id}/address", function($id) use ($app) {
+    $current_store = Store::find($id);
+    $new_address = $_POST['new_address'];
+    $current_store->updateStoreAddress($new_address);
+    return $app['twig']->render('store.twig', array('store' => $current_store, 'brands' => $current_store->getBrands(), 'all_brands' => Brand::getAll()));
+  });
 
   return $app;
 

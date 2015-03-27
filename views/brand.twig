@@ -1,0 +1,45 @@
+<html>
+    <head>
+      <title>Assessment 4: Shoe Store & Brand Database</title>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+    </head>
+    <body>
+        <div class="container">
+        <h3>{{ brand.getBrandName }}:</h3>
+
+        {% if stores is not empty %}
+            <h5>Here are the stores selling this brand.</h5>
+            <ol>
+            {% for store in stores %}
+                <p>{{ store.getName }}</p>
+            {% endfor %}
+            </ol>
+            {% else %}
+            <p>This brand isn't sold anywhere yet.</p>
+        {% endif %}
+        <form action="/add_stores" method="post">
+            <label for="name">Select a store</label>
+            <input value="{{ brand.getId }}" id="brand_id" name="brand_id" type="hidden">
+            <select id="store_id" name="store_id" type="text">
+                {% for store in all_stores %}
+                    <option value="{{ store.getId }}"> {{ store.getName }} </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Add Store</button>
+        </form>
+
+        <form action="/brands/{{ brand.getId }}/delete" method="post">
+          <input name="_method" type="hidden" value="delete">
+          <button type="submit">Delete Brand</button>
+        </form>
+
+        <form action="/brands">
+            <button type="submit">Back</button>
+        </form>
+
+
+        <p><a href='/'>Home</a></p>
+
+        </div>
+    </body>
+</html>
