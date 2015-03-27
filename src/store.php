@@ -53,11 +53,17 @@ class Store
     $this->setId($result['id']);
   }
 
-  function updateStore()
+  function updateStoreName($new_name)
   {
-
+    $GLOBALS['DB']->exec("UPDATE stores SET name = '{$new_name}' WHERE id = {$this->getId()};");
+    $this->setName($new_name);
   }
 
+  function updateStoreAddress($new_address)
+  {
+    $GLOBALS['DB']->exec("UPDATE stores SET address = '{$new_address}' WHERE id = {$this->getId()};");
+    $this->setAddress($new_address);
+  }
 
 //static functions
   static function getAll()
@@ -74,15 +80,30 @@ class Store
     return $stores;
   }
 
+  static function find($search_id)
+  {
+    $found_store = null;
+    $stores = Store::getAll();
+    foreach($stores as $store) {
+      $store_id = $store->getId();
+      if ($store_id == $search_id) {
+        $found_store = $store;
+      }
+    }
+    return $found_store;
+  }
+
+//delete functions
   static function deleteAll()
   {
     $GLOBALS['DB']->exec("DELETE FROM stores *;");
   }
 
-  static function find()
+  function deleteStore()
   {
 
   }
+
 
 //join brands to stores
   function addBrand()

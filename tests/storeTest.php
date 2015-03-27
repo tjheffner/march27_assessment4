@@ -166,6 +166,62 @@
       $this->assertEquals([], $result);
     }
 
+    function test_find()
+    {
+      //Arrange
+      $name = "Boots n Cats";
+      $address = "123 drive rd.";
+      $id = 1;
+      $test_store = new Store($name, $address, $id);
+      $test_store->save();
+
+      $name2 = "For Your Feet";
+      $address2 = "Washington Sq. Mall";
+      $id2 = 2;
+      $test_store2 = new Store($name2, $address2, $id2);
+      $test_store2->save();
+
+      //Act
+      $result = Store::find($test_store->getId());
+
+      //Assert
+      $this->assertEquals($test_store, $result);
+    }
+
+    function test_updateStoreName()
+    {
+      //Arrange
+      $name = "Kicks R Us";
+      $address = "456 Mall";
+      $id = 1;
+      $test_store = new Store($name, $address, $id);
+      $test_store->save();
+      $new_name = "We Sell Shoes";
+
+      //Act
+      $test_store->updateStoreName($new_name);
+
+      //Assert
+      $this->assertEquals($test_store->getName(), $new_name);
+    }
+
+    function test_updateStoreAddress()
+    {
+      //Arrange
+      $name = "Kicks R Us";
+      $address = "456 Mall";
+      $id = 1;
+      $test_store = new Store($name, $address, $id);
+      $test_store->save();
+      $new_address = "567 Next Door";
+
+      //Act
+      $test_store->updateStoreAddress($new_address);
+
+      //Assert
+      $this->assertEquals($test_store->getAddress(), $new_address);
+    }
+
   }
 
 
