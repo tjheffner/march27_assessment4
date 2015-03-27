@@ -74,7 +74,31 @@
   });
 
   //Two delete routes per class: one class-wide, one singular
+  $app->post("/delete_stores", function() use ($app) {
+    Store::deleteAll();
+    return $app['twig']->render('stores.twig', array('stores' => Store::getAll()));
+  });
+
+  $app->post("/delete_brands", function() use ($app) {
+    Brand::deleteAll();
+    return $app['twig']->render('brands.twig', array('brands' => Brand::getAll()));
+  });
+
+  $app->delete("/stores/{id}/delete", function($id) use ($app) {
+    $current_store = Store::find($id);
+    $current_store->delete();
+    return $app['twig']->render('stores.twig', array('stores' => Store::getAll()));
+  });
+
+  $app->delete("/brands/{id}/delete", function($id) use ($app) {
+    $current_brand = Brand::find($id);
+    $current_brand->delete();
+    return $app['twig']->render('brands.twig', array('brands' => Brand::getAll()));
+  });
 
   //Two edit routes per class: one to the page, one from the page
+
+
+  //Two update routes for store class: name & address
 
  ?>
