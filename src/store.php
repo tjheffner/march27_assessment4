@@ -102,7 +102,12 @@ class Store
   function deleteStore()
   {
     $GLOBALS['DB']->exec("DELETE FROM stores WHERE id = {$this->getId()};");
+  }
 
+  function delete()
+  {
+    $GLOBALS['DB']->exec("DELETE FROM stores WHERE id = {$this->getId()};");
+    $GLOBALS['DB']->exec("DELETE FROM sold_by WHERE store_id = {$this->getId()};");
   }
 
 //join brands to stores
@@ -117,17 +122,17 @@ class Store
         stores JOIN sold_by ON (stores.id = sold_by.store_id)
                JOIN brands ON (sold_by.brand_id = brands.id)
                WHERE stores.id = {$this->getId()};");
-    $store_ids = $query->fetchAll(PDO::FETCH_ASSOC);
+    $brand_ids = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    $stores = array();
-    foreach ($store_ids as $store) {
-      $name = $store['name'];
-      $address = $store['address'];
-      $id = $store['id'];
-      $new_store = new Store($name, $address, $id);
-      array_push($stores, $new_store);
+    $brands = array();
+    foreach ($brand_ids as $brand) {
+      $brand_name = $brand['brand_name'];
+      $id = $brand['id'];
+      $new_brand = new Brand($brand_name, $id);
+      array_push($brands, $new_brand);
     }
-    return $stores;
+    return $brands;
+
   }
 
 }

@@ -247,13 +247,76 @@
       $this->assertEquals([$test_store2], $result);
     }
 
-//only test getBrands because addBrand must work if this test works
+    function test_addBrand()
+    {
+      //Arrange
+      $name = "Sandals";
+      $id = 1;
+      $address ="the beach";
+      $test_store = new Store($name, $address, $id);
+      $test_store->save();
+
+      $brand_name = "Rainbow";
+      $id2 = 2;
+      $test_brand = new Brand($brand_name, $id2);
+      $test_brand->save();
+
+      //Act
+      $test_store->addBrand($test_brand);
+
+      //Assert
+      $this->assertEquals($test_store->getBrands(), [$test_brand]);
+    }
+
     function test_getBrands()
     {
+      $name = "Shoe Store";
+      $address = "online";
+      $id = 1;
+      $test_store = new Store($name, $address, $id);
+      $test_store->save();
 
+      $brand_name = "nike";
+      $id2 = 2;
+      $test_brand = new Brand($brand_name, $id2);
+      $test_brand->save();
+
+      $brand_name2 = "adidas";
+      $id3 = 3;
+      $test_brand2 = new Brand($brand_name2, $id3);
+      $test_brand2->save();
+
+      //Act
+      $test_store->addBrand($test_brand);
+      $test_store->addBrand($test_brand2);
+
+      //Assert
+      $result = $test_store->getBrands();
+      $this->assertEquals([$test_brand, $test_brand2], $result);
+    }
+
+    function test_delete()
+    {
+      //Arrange
+      $name = "Sandals";
+      $id = 1;
+      $address ="the beach";
+      $test_store = new Store($name, $address, $id);
+      $test_store->save();
+
+      $brand_name = "Rainbow";
+      $id2 = 2;
+      $test_brand = new Brand($brand_name, $id2);
+      $test_brand->save();
+
+      //Act
+      $test_store->addBrand($test_brand);
+      $test_store->delete();
+
+      //Assert
+      $this->assertEquals([], $test_store->getBrands());
     }
 
   }
-
 
  ?>
