@@ -13,7 +13,7 @@
   {
     protected function tearDown()
     {
-
+      Store::deleteAll();
     }
 
     function test_getName()
@@ -111,7 +111,59 @@
       $this->assertEquals(2, $result);
     }
 
+    function test_save()
+    {
+      //Arrange
+      $name = "Shoe Emporium";
+      $address = "678 Street Rd.";
+      $id = 1;
+      $test_store = new Store($name, $address, $id);
 
+      //Act
+      $test_store->save();
+
+      //Assert
+      $result = Store::getAll();
+      $this->assertEquals([$test_store], $result);
+    }
+
+    function test_getAll()
+    {
+      //Arrange
+      $name = "Kicks R Us";
+      $address = "456 Mall";
+      $id = 1;
+      $test_store = new Store($name, $address, $id);
+      $test_store->save();
+
+      $name2 = "Kicks Kicks Kicks";
+      $address2 = "789 Rodeo Drive";
+      $test_store2 = new Store($name2, $address2, $id);
+      $test_store->save();
+
+      //Act
+      $result = Store::getAll();
+
+      //Assert
+      $this->assertEquals([$test_store, $test_store2], $result);
+    }
+
+    function test_deleteAll()
+    {
+      //Arrange
+      $name = "Kicks R Us";
+      $address = "456 Mall";
+      $id = 1;
+      $test_store = new Store($name, $address, $id);
+      $test_store->save();
+
+      //Act
+      Store::deleteAll();
+
+      //Assert
+      $result = Store::getAll();
+      $this->assertEquals([], $result);
+    }
 
   }
 
