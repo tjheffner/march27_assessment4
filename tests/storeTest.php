@@ -250,7 +250,7 @@
 //only test getBrands because addBrand must work if this test works
     function test_getBrands()
     {
-      
+
     }
 
   }
