@@ -132,7 +132,6 @@ class Store
       array_push($brands, $new_brand);
     }
     return $brands;
-
   }
 
 }

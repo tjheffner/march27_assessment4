@@ -74,6 +74,42 @@ class Brand
     $GLOBALS['DB']->exec("DELETE FROM brands *;");
   }
 
+  function deleteBrand()
+  {
+    $GLOBALS['DB']->exec("DELETE FROM brands WHERE id = {$this->getId()};");
+  }
+
+  function delete()
+  {
+    $GLOBALS['DB']->exec("DELETE FROM brands WHERE id = {$this->getId()};");
+    $GLOBALS['DB']->exec("DELETE FROM sold_by WHERE brand_id = {$this->getId()};");
+  }
+
+//join stores to brands
+  function addStore($store)
+  {
+    $GLOBALS['DB']->exec("INSERT INTO sold_by (store_id, brand_id) VALUES ({$store->getId()}, {$this->getId()});");
+  }
+
+  function getStores()
+  {
+    $query = $GLOBALS['DB']->query("SELECT stores.* FROM
+        brands JOIN sold_by ON (brands.id = sold_by.brand_id)
+               JOIN stores ON (sold_by.store_id = stores.id)
+               WHERE brands.id = {$this->getId()};");
+    $store_ids = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    $stores = array();
+    foreach ($store_ids as $store) {
+      $name = $store['name'];
+      $id = $store['id'];
+      $address = $store['address'];
+      $new_store = new Store($name, $address, $id);
+      array_push($stores, $new_store);
+    }
+    return $stores;
+  }
+
 }
 
  ?>

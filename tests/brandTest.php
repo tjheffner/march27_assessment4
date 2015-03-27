@@ -149,6 +149,98 @@
       $this->assertEquals($test_brand, $result);
     }
 
+    function test_deleteBrand()
+    {
+      //Arrange
+      $brand_name = "Crocs";
+      $id = 1;
+      $test_brand = new Brand($brand_name, $id);
+      $test_brand->save();
+
+      $brand_name2 = "Flats";
+      $id2 = 2;
+      $test_brand2 = new Brand($brand_name2, $id2);
+      $test_brand2->save();
+
+      //Act
+      $test_brand->deleteBrand();
+      $result = Brand::getAll();
+
+      //Assert
+      $this->assertEquals([$test_brand2], $result);
+    }
+
+    function test_addStore()
+    {
+      //Arrange
+      $brand_name = "Rainbow";
+      $id = 2;
+      $test_brand = new Brand($brand_name, $id);
+      $test_brand->save();
+
+      $name = "Sandals";
+      $id = 1;
+      $address ="the beach";
+      $test_store = new Store($name, $address, $id);
+      $test_store->save();
+
+      //Act
+      $test_brand->addStore($test_store);
+
+      //Assert
+      $this->assertEquals($test_brand->getStores(), [$test_store]);
+    }
+
+    function test_getBrands()
+    {
+      //Arrange
+      $brand_name = "Rainbow";
+      $id = 2;
+      $test_brand = new Brand($brand_name, $id);
+      $test_brand->save();
+
+      $name = "Sandals";
+      $id2 = 2;
+      $address ="the beach";
+      $test_store = new Store($name, $address, $id2);
+      $test_store->save();
+
+      $name2 = "Barefoot is Bad";
+      $id3 = 3;
+      $address2 = "everywhere";
+      $test_store2 = new Store($name2, $address2, $id3);
+      $test_store2->save();
+
+      //Act
+      $test_brand->addStore($test_store);
+      $test_brand->addStore($test_store2);
+
+      //Assert
+      $this->assertEquals($test_brand->getStores(), [$test_store, $test_store2]);
+    }
+
+    function test_delete()
+    {
+      //Arrange
+      $brand_name = "Rainbow";
+      $id2 = 2;
+      $test_brand = new Brand($brand_name, $id2);
+      $test_brand->save();
+
+      $name = "Sandals";
+      $id = 1;
+      $address ="the beach";
+      $test_store = new Store($name, $address, $id);
+      $test_store->save();
+
+      //Act
+      $test_brand->addStore($test_store);
+      $test_brand->delete();
+
+      //Assert
+      $this->assertEquals([], $test_brand->getStores());
+    }
 
   }
+  
  ?>
