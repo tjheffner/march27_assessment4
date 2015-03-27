@@ -138,8 +138,9 @@
 
       $name2 = "Kicks Kicks Kicks";
       $address2 = "789 Rodeo Drive";
-      $test_store2 = new Store($name2, $address2, $id);
-      $test_store->save();
+      $id2 = 2;
+      $test_store2 = new Store($name2, $address2, $id2);
+      $test_store2->save();
 
       //Act
       $result = Store::getAll();
