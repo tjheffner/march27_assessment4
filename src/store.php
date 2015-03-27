@@ -37,12 +37,12 @@ class Store
 
   function setAddress($new_address)
   {
-    $this->address = (string) $new_address
+    $this->address = (string) $new_address;
   }
 
   function setId($new_id)
   {
-    $this->id = (int) $new_id
+    $this->id = (int) $new_id;
   }
 
 //save + update
