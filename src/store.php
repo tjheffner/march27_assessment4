@@ -101,9 +101,9 @@ class Store
 
   function deleteStore()
   {
+    $GLOBALS['DB']->exec("DELETE FROM stores WHERE id = {$this->getId()};");
 
   }
-
 
 //join brands to stores
   function addBrand()

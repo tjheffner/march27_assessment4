@@ -222,6 +222,39 @@
       $this->assertEquals($test_store->getAddress(), $new_address);
     }
 
+    function test_deleteStore()
+    {
+      //Arrange
+      $name = "Kicks R Us";
+      $address = "456 Mall";
+      $id = 1;
+      $test_store = new Store($name, $address, $id);
+      $test_store->save();
+
+      $name2 = "Kicks Kicks Kicks";
+      $address2 = "789 Rodeo Drive";
+      $id2 = 2;
+      $test_store2 = new Store($name2, $address2, $id2);
+      $test_store2->save();
+
+      //Act
+      $test_store->deleteStore();
+      $result = Store::getAll();
+
+      //Assert
+      $this->assertEquals([$test_store2], $result);
+    }
+
+    function test_addBrand()
+    {
+
+    }
+
+    function test_getBrands()
+    {
+
+    }
+
   }
 
 
