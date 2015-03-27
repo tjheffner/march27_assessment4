@@ -1,5 +1,4 @@
 <?php
-
   require_once __DIR__."/../vendor/autoload.php";
   require_once __DIR__."/../src/brand.php";
   require_once __DIR__."/../src/store.php";
@@ -50,12 +49,12 @@
 
   $app->get("/stores/{id}", function($id) use ($app) {
     $current_store = Store::find($id);
-    return $app['twig']->render('store.twig', array('store' => $current_store, 'brands' => $store->getBrands(), 'all_brands' => Brand::getAll()));
+    return $app['twig']->render('store.twig', array('store' => $current_store, 'brands' => $current_store->getBrands(), 'all_brands' => Brand::getAll()));
   });
 
   $app->get("/brands/{id}", function($id) use ($app) {
     $current_brand = Brand::find($id);
-    return $app['twig']->render('brand.twig', array('brand' => $current_brand, 'stores' => $brand->getStores(), 'all_stores' => Store::getAll()));
+    return $app['twig']->render('brand.twig', array('brand' => $current_brand, 'stores' => $current_brand->getStores(), 'all_stores' => Store::getAll()));
   });
 
   //One route per class to add the other
@@ -100,5 +99,7 @@
 
 
   //Two update routes for store class: name & address
+
+  return $app;
 
  ?>
