@@ -106,14 +106,28 @@ class Store
   }
 
 //join brands to stores
-  function addBrand()
+  function addBrand($brand)
   {
-
+    $GLOBALS['DB']->exec("INSERT INTO sold_by (store_id, brand_id) VALUES ({$this->getId()}, {$brand->getId()});");
   }
 
   function getBrands()
   {
+    $query = $GLOBALS['DB']->query("SELECT brands.* FROM
+        stores JOIN sold_by ON (stores.id = sold_by.store_id)
+               JOIN brands ON (sold_by.brand_id = brands.id)
+               WHERE stores.id = {$this->getId()};");
+    $store_ids = $query->fetchAll(PDO::FETCH_ASSOC);
 
+    $stores = array();
+    foreach ($store_ids as $store) {
+      $name = $store['name'];
+      $address = $store['address'];
+      $id = $store['id'];
+      $new_store = new Store($name, $address, $id);
+      array_push($stores, $new_store)
+    }
+    return $stores;
   }
 
 }

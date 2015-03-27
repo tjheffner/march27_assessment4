@@ -6,6 +6,7 @@
   */
 
   require_once "src/Store.php";
+  require_once "src/Brand.php";
 
   $DB = new PDO ('pgsql:host=localhost;dbname=shoes_test');
 
@@ -14,6 +15,7 @@
     protected function tearDown()
     {
       Store::deleteAll();
+      Brand::deleteAll();
     }
 
     function test_getName()
@@ -245,14 +247,10 @@
       $this->assertEquals([$test_store2], $result);
     }
 
-    function test_addBrand()
-    {
-
-    }
-
+//only test getBrands because addBrand must work if this test works
     function test_getBrands()
     {
-
+      
     }
 
   }
