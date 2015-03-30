@@ -11,12 +11,12 @@ This app allows users to keep track of local shoe stores and the brands they sto
 
 #### Setup instructions
 1. Clone this git repository
-2. Set your localhost root folder to ~/march24_registrar/web/
+2. Set your localhost root folder to ~/shoe_store/web/
 3. Ensure PHP server is running.
 4. Start Postgres and import shoes.sql database into a new database shoes
-4b. Do the same for the test database: shoes_test.sql
-5. Use Composer to install required dependencies in the composer.json file
-6. Start the web app by pointing your browser to the root (http://localhost:8000/)
+5. Do the same for the test database: shoes_test.sql
+6. Use Composer to install required dependencies in the composer.json file
+7. Start the web app by pointing your browser to the root (http://localhost:8000/)
 
 
 #### PSQL commands
